@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +49,7 @@ public class EmployeeService {
       }
    }
 
+   @Transactional
    public EmployeeDTO updateEmployee(long id, UpdateEmployeeCommand command) {
       Optional<Employee> optionalEmployee = employeeRepository.findById(id);
 
@@ -59,7 +61,7 @@ public class EmployeeService {
          if (command.getBirthDate() != null) {
             employee.setBirthDate(command.getBirthDate());
          }
-         employeeRepository.save(employee);
+
          return modelMapper.map(employee, EmployeeDTO.class);
       }
       else {
