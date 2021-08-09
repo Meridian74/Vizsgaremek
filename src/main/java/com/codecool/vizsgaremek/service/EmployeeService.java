@@ -22,9 +22,9 @@ public class EmployeeService {
    private ModelMapper modelMapper;
    private EmployeeRepository employeeRepository;
 
-   public EmployeeService(ModelMapper modelMapper, EmployeeRepository employeeRepository) {
-      this.modelMapper = modelMapper;
-      this.employeeRepository = employeeRepository;
+   public EmployeeService(ModelMapper mm, EmployeeRepository er) {
+      this.modelMapper = mm;
+      this.employeeRepository = er;
    }
 
 
@@ -53,21 +53,19 @@ public class EmployeeService {
    public EmployeeDTO updateEmployee(long id, UpdateEmployeeCommand command) {
       Optional<Employee> optionalEmployee = employeeRepository.findById(id);
 
-      if (optionalEmployee.isPresent()) {
-         Employee employee = optionalEmployee.get();
-         if (command.getName() != null) {
-            employee.setName(command.getName());
-         }
-         if (command.getBirthDate() != null) {
-            employee.setBirthDate(command.getBirthDate());
-         }
-
-         return modelMapper.map(employee, EmployeeDTO.class);
-      }
-      else {
+      if (optionalEmployee.isEmpty()) {
          throw new EmployeeNotFoundException(id);
       }
 
+      Employee employee = optionalEmployee.get();
+      if (command.getName() != null) {
+         employee.setName(command.getName());
+      }
+      if (command.getBirthDate() != null) {
+         employee.setBirthDate(command.getBirthDate());
+      }
+
+      return modelMapper.map(employee, EmployeeDTO.class);
    }
 
    public void deleteEmployeeById(long id) {
@@ -91,6 +89,5 @@ public class EmployeeService {
 
       return modelMapper.map(filtered, targetListType);
    }
-
 
 }

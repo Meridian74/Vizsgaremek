@@ -4,7 +4,6 @@ import com.codecool.vizsgaremek.dto.CreateEmployeeCommand;
 import com.codecool.vizsgaremek.dto.EmployeeDTO;
 import com.codecool.vizsgaremek.dto.UpdateEmployeeCommand;
 import com.codecool.vizsgaremek.service.EmployeeService;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +14,9 @@ import java.util.Optional;
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-   private ModelMapper modelMapper;
    private EmployeeService employeeService;
 
-   public EmployeeController(ModelMapper mm, EmployeeService es) {
-      this.modelMapper = mm;
+   public EmployeeController(EmployeeService es) {
       this.employeeService = es;
    }
 
