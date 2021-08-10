@@ -123,8 +123,6 @@ public class AttendanceService {
    }
 
 
-
-
    private Employee selectEmployee(long employeeId) {
       Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
       if (optionalEmployee.isEmpty()) {

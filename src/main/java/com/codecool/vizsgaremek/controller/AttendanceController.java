@@ -5,8 +5,6 @@ import com.codecool.vizsgaremek.service.AttendanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-
 
 @RestController
 @RequestMapping("/api/attendances")
