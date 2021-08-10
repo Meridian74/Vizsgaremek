@@ -54,5 +54,49 @@ Content-Type: application/json
 
 {"date": "2021-08-09"}
 
-###
+### try to replace the employee's shift with non-existing date
+POST http://localhost:8080/api/attendances/replace-shift?emp_id=1&new_shift_id=2
+Content-Type: application/json
 
+{"date": "2021-08-20"}
+
+
+### get employee attendance by a given date
+GET localhost:8080/api/attendances/shift-at-date?emp_id=1
+Content-Type: application/json
+
+{"date": "2021-08-10"}
+
+### get list of attendances of employee by employeeId
+GET http://localhost:8080/api/attendances/list-of-attendances?emp_id=1
+Content-Type: application/json
+
+### set entryTime at attendance of a day
+PUT http://localhost:8080/api/attendances/entry
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "timestamp": "2021-08-10T08:16:00",
+  "shiftDate": "2021-08-09"
+}
+
+### set exitTime at attendance of a day
+PUT http://localhost:8080/api/attendances/exit
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "timestamp": "2021-08-10T18:01:53",
+  "shiftDate": "2021-08-09"
+}
+
+### set another day of entryTime
+PUT http://localhost:8080/api/attendances/entry
+Content-Type: application/json
+
+{
+  "employeeId": 1,
+  "timestamp": "2021-08-10T08:50:23",
+  "shiftDate": "2021-08-10"
+}

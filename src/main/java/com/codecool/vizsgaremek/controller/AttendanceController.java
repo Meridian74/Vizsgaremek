@@ -1,11 +1,11 @@
 package com.codecool.vizsgaremek.controller;
 
-import com.codecool.vizsgaremek.dto.EmployeeWithAttendencesDTO;
-import com.codecool.vizsgaremek.dto.AttendanceOfEmployeeDTO;
-import com.codecool.vizsgaremek.dto.CreateDateCommand;
+import com.codecool.vizsgaremek.dto.*;
 import com.codecool.vizsgaremek.service.AttendanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -44,10 +44,21 @@ public class AttendanceController {
       return attendanceService.getEmployeeAttendanceByDate(employeeId, command);
    }
 
-   @GetMapping("/list-of-attendances/{id}")
+   @GetMapping("/list-of-attendances")
    public EmployeeWithAttendencesDTO getListOfAttendancesOfEmployee(
-         @PathVariable("id") long employeeId) {
+         @RequestParam("emp_id") long employeeId) {
       return attendanceService.getListOfAttendancesOfEmployee(employeeId);
    }
+
+   @PutMapping("entry")
+   public void setEntryTime(@RequestBody CreateEntryCommand command) {
+      attendanceService.setEntryTime(command);
+   }
+
+   @PutMapping("exit")
+   public void setEntryTime(@RequestBody CreateExitCommand command) {
+      attendanceService.setExitTime(command);
+   }
+
 
 }

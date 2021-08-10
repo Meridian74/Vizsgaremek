@@ -1,8 +1,6 @@
 package com.codecool.vizsgaremek.service;
 
-import com.codecool.vizsgaremek.dto.EmployeeWithAttendencesDTO;
-import com.codecool.vizsgaremek.dto.AttendanceOfEmployeeDTO;
-import com.codecool.vizsgaremek.dto.CreateDateCommand;
+import com.codecool.vizsgaremek.dto.*;
 import com.codecool.vizsgaremek.exception.EmployeeNotFoundException;
 import com.codecool.vizsgaremek.exception.DateNotFoundException;
 import com.codecool.vizsgaremek.exception.ShiftNotFoundException;
@@ -87,6 +85,44 @@ public class AttendanceService {
       Employee employee = selectEmployee(employeeId);
       return modelMapper.map(employee, EmployeeWithAttendencesDTO.class);
    }
+
+   @Transactional
+   public void setEntryTime(CreateEntryCommand command) {
+      Employee employee = selectEmployee(command.getEmployeeId());
+      LocalDate shiftDate = command.getShiftDate();
+
+      Map dailyAttendancesOfEmployee = employee.getDailyAttendances();
+      if (dailyAttendancesOfEmployee.get(shiftDate) == null) {
+         throw new DateNotFoundException(shiftDate);
+      }
+
+      Attendance attendance = (Attendance) dailyAttendancesOfEmployee.get(shiftDate);
+      attendance.setEntryTime(command.getTimestamp());
+
+      dailyAttendancesOfEmployee.replace(shiftDate, attendance);
+      employee.setDailyAttendances(dailyAttendancesOfEmployee);
+
+   }
+
+   @Transactional
+   public void setExitTime(CreateExitCommand command) {
+      Employee employee = selectEmployee(command.getEmployeeId());
+      LocalDate shiftDate = command.getShiftDate();
+
+      Map dailyAttendancesOfEmployee = employee.getDailyAttendances();
+      if (dailyAttendancesOfEmployee.get(shiftDate) == null) {
+         throw new DateNotFoundException(shiftDate);
+      }
+
+      Attendance attendance = (Attendance) dailyAttendancesOfEmployee.get(shiftDate);
+      attendance.setExitTime(command.getTimestamp());
+
+      dailyAttendancesOfEmployee.replace(shiftDate, attendance);
+      employee.setDailyAttendances(dailyAttendancesOfEmployee);
+
+   }
+
+
 
 
    private Employee selectEmployee(long employeeId) {

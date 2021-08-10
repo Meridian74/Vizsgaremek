@@ -12,7 +12,7 @@ public class DateNotFoundException extends AbstractThrowableProblem {
       super(URI.create("attendance/shift-date-not-found"),
             "Date not found!",
             Status.NOT_FOUND,
-            String.format("Date of shift * %tF * not found!", date));
+            String.format("Date of shift {%tF} not found!", date));
    }
 
 }
