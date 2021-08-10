@@ -12,12 +12,11 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
+public class EmployeeWithAttendencesDTO {
 
    private long id;
    private String name;
-   private LocalDate birthDate;
 
-   // private Map<LocalDate, Attendance> dailyAttendances = new HashMap<>();
+   Map<LocalDate, Attendance> dailyAttendances = new HashMap<>();
 
 }

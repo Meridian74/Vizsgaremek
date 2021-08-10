@@ -1,3 +1,4 @@
+### add a test employee
 POST http://localhost:8080/api/employees
 Content-Type: application/json
 
@@ -6,7 +7,7 @@ Content-Type: application/json
   "birthDate": "1995-02-18"
 }
 
-###
+### add a shift
 POST http://localhost:8080/api/shift
 Content-Type: application/json
 
@@ -16,11 +17,42 @@ Content-Type: application/json
   "duration": 8,
   "restTime": 30
 }
-###
-POST http://localhost:8080/api/attendances/addshift?shiftid=1&employeeid=1
+
+### add another shift
+POST http://localhost:8080/api/shift
+Content-Type: application/json
+
+{
+  "name": "14:00-ás délutáni műszak",
+  "startTime": "14:00:00",
+  "duration": 8,
+  "restTime": 60
+}
+
+
+### put planned shift at a given date for employee
+POST http://localhost:8080/api/attendances/add-shift?emp_id=1&shift_id=1
+Content-Type: application/json
+
+{"date": "2021-08-09"}
+
+### put planned shift at next given date for employee
+POST http://localhost:8080/api/attendances/add-shift?emp_id=1&shift_id=1
 Content-Type: application/json
 
 {"date": "2021-08-10"}
-###
 
+### put planned shift at next given date for employee
+POST http://localhost:8080/api/attendances/add-shift?emp_id=1&shift_id=1
+Content-Type: application/json
+
+{"date": "2021-08-11"}
+
+### replace the employee's shift at a given date
+POST http://localhost:8080/api/attendances/replace-shift?emp_id=1&new_shift_id=2
+Content-Type: application/json
+
+{"date": "2021-08-09"}
+
+###
 

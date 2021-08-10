@@ -1,8 +1,11 @@
 package com.codecool.vizsgaremek.service;
 
+import com.codecool.vizsgaremek.dto.EmployeeWithAttendencesDTO;
+import com.codecool.vizsgaremek.dto.AttendanceOfEmployeeDTO;
 import com.codecool.vizsgaremek.dto.CreateDateCommand;
-import com.codecool.vizsgaremek.dto.EmployeeDTO;
 import com.codecool.vizsgaremek.exception.EmployeeNotFoundException;
+import com.codecool.vizsgaremek.exception.DateNotFoundException;
+import com.codecool.vizsgaremek.exception.ShiftNotFoundException;
 import com.codecool.vizsgaremek.model.Attendance;
 import com.codecool.vizsgaremek.model.Employee;
 import com.codecool.vizsgaremek.model.Shift;
@@ -11,6 +14,7 @@ import com.codecool.vizsgaremek.repository.ShiftRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
@@ -28,30 +32,91 @@ public class AttendanceService {
       this.shiftRepository = shiftRepository;
    }
 
-   public EmployeeDTO addShiftToEmployee(long shiftId, long employeeId, CreateDateCommand command) {
+   @Transactional
+   public AttendanceOfEmployeeDTO addShiftToEmployee(long shiftId, long employeeId, CreateDateCommand command) {
+      Employee employee = selectEmployee(employeeId);
+      Shift shift = selectPlannedShift(shiftId);
+      LocalDate shiftDate = command.getDate();
 
-      // select employee
-      Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-      if (optionalEmployee.isEmpty()) {
-         throw new EmployeeNotFoundException(employeeId);
-      }
-      Employee employee = optionalEmployee.get();
-
-      // select planned shift
-      Optional<Shift> optionalShift = shiftRepository.findById(shiftId);
-      if (optionalEmployee.isEmpty()) {
-         throw new EmployeeNotFoundException(employeeId);
-      }
-      Shift shift = optionalShift.get();
-
-      // setting shift for employee at shiftDate
       Attendance attendance = new Attendance();
       attendance.setCurrentDailyShift(shift);
 
       Map dailyAttendancesOfEmployee = employee.getDailyAttendances();
-      LocalDate shiftDate = command.getDate();
       dailyAttendancesOfEmployee.put(shiftDate, attendance);
+      employee.setDailyAttendances(dailyAttendancesOfEmployee);
 
-      return modelMapper.map(optionalEmployee.get(), EmployeeDTO.class);
+      return createAttendanceOfEmployeeDto(employee, shiftDate, attendance);
    }
+
+   @Transactional
+   public AttendanceOfEmployeeDTO replaceShift(long employeeId, long newShiftId, CreateDateCommand command) {
+      Employee employee = selectEmployee(employeeId);
+      Shift newShift = selectPlannedShift(newShiftId);
+      LocalDate shiftDate = command.getDate();
+
+      Map dailyAttendancesOfEmployee = employee.getDailyAttendances();
+
+      if (dailyAttendancesOfEmployee.get(shiftDate) == null ||
+            !(dailyAttendancesOfEmployee.get(shiftDate) instanceof Attendance)) {
+         throw new DateNotFoundException(shiftDate);
+      }
+      Attendance attendance = (Attendance) dailyAttendancesOfEmployee.get(shiftDate);
+
+      attendance.setCurrentDailyShift(newShift);
+      dailyAttendancesOfEmployee.put(shiftDate, attendance);
+      employee.setDailyAttendances(dailyAttendancesOfEmployee);
+
+      return createAttendanceOfEmployeeDto(employee, shiftDate, attendance);
+   }
+
+   public AttendanceOfEmployeeDTO getEmployeeAttendanceByDate(long employeeId, CreateDateCommand command) {
+      Employee employee = selectEmployee(employeeId);
+      LocalDate shiftDate = command.getDate();
+
+      Map dailyAttendancesOfEmployee = employee.getDailyAttendances();
+      if (dailyAttendancesOfEmployee.get(shiftDate) == null ||
+            !(dailyAttendancesOfEmployee.get(shiftDate) instanceof Attendance)) {
+         throw new DateNotFoundException(shiftDate);
+      }
+      Attendance attendance = (Attendance) dailyAttendancesOfEmployee.get(shiftDate);
+
+      return createAttendanceOfEmployeeDto(employee, shiftDate, attendance);
+   }
+
+   public EmployeeWithAttendencesDTO getListOfAttendancesOfEmployee(long employeeId) {
+      Employee employee = selectEmployee(employeeId);
+      return modelMapper.map(employee, EmployeeWithAttendencesDTO.class);
+   }
+
+
+   private Employee selectEmployee(long employeeId) {
+      Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
+      if (optionalEmployee.isEmpty()) {
+         throw new EmployeeNotFoundException(employeeId);
+      }
+      return optionalEmployee.get();
+   }
+
+   private Shift selectPlannedShift(long shiftId) {
+      Optional<Shift> optionalShift = shiftRepository.findById(shiftId);
+      if (optionalShift.isEmpty()) {
+         throw new ShiftNotFoundException(shiftId);
+      }
+      return optionalShift.get();
+   }
+
+   private AttendanceOfEmployeeDTO createAttendanceOfEmployeeDto(Employee employee, LocalDate shiftDate, Attendance attendance) {
+      AttendanceOfEmployeeDTO result = new AttendanceOfEmployeeDTO();
+
+      result.setId(employee.getId());
+      result.setName(employee.getName());
+      result.setAttendeanceOfOneDate(attendance);
+      result.setDateOfAttendance(shiftDate);
+
+      return result;
+   }
+
 }
+
+
+

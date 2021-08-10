@@ -6,18 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
+public class AttendanceOfEmployeeDTO {
 
    private long id;
    private String name;
-   private LocalDate birthDate;
 
-   // private Map<LocalDate, Attendance> dailyAttendances = new HashMap<>();
+   private Attendance AttendeanceOfOneDate;
+   private LocalDate dateOfAttendance;
 
 }
