@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateExitCommand {
+public class UpdateEntryCommand {
 
    private long employeeId;
    private LocalDateTime timestamp;

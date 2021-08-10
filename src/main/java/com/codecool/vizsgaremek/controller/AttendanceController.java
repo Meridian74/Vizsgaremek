@@ -49,12 +49,12 @@ public class AttendanceController {
    }
 
    @PutMapping("entry")
-   public void setEntryTime(@RequestBody CreateEntryCommand command) {
+   public void setEntryTime(@RequestBody UpdateEntryCommand command) {
       attendanceService.setEntryTime(command);
    }
 
    @PutMapping("exit")
-   public void setEntryTime(@RequestBody CreateExitCommand command) {
+   public void setEntryTime(@RequestBody UpdateExitCommand command) {
       attendanceService.setExitTime(command);
    }
 

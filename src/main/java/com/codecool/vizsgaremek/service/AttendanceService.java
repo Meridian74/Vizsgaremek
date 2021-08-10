@@ -87,7 +87,7 @@ public class AttendanceService {
    }
 
    @Transactional
-   public void setEntryTime(CreateEntryCommand command) {
+   public void setEntryTime(UpdateEntryCommand command) {
       Employee employee = selectEmployee(command.getEmployeeId());
       LocalDate shiftDate = command.getShiftDate();
 
@@ -105,7 +105,7 @@ public class AttendanceService {
    }
 
    @Transactional
-   public void setExitTime(CreateExitCommand command) {
+   public void setExitTime(UpdateExitCommand command) {
       Employee employee = selectEmployee(command.getEmployeeId());
       LocalDate shiftDate = command.getShiftDate();
 
