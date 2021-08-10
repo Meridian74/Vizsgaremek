@@ -12,7 +12,9 @@ import java.time.LocalTime;
 public class CreateShiftCommand {
 
    private String name;
+
    private LocalTime startTime;
+
    private int duration;
    private int restTime;
 

@@ -28,6 +28,8 @@ public class Employee {
    private LocalDate birthDate;
 
    // note: further properties can be specified here in the future
+   // for example:
+   // adding a groupID attribute, that could be to ensure using uniform working time settings per group
 
    @ElementCollection
    @CollectionTable(name = "DAILY_ATTENDANCE", joinColumns = @JoinColumn(name = "EMP_ID"))

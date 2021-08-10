@@ -20,11 +20,10 @@ public class ShiftService {
    private ModelMapper modelMapper;
    private ShiftRepository shiftRepository;
 
-   public ShiftService(ModelMapper mm, ShiftRepository sr) {
-      this.modelMapper = mm;
-      this.shiftRepository = sr;
+   public ShiftService(ModelMapper modelMapper, ShiftRepository shiftRepository) {
+      this.modelMapper = modelMapper;
+      this.shiftRepository = shiftRepository;
    }
-
 
    public ShiftDTO createShift(CreateShiftCommand command) {
       Shift shift = new Shift();

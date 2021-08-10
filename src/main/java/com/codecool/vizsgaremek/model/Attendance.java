@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -15,12 +15,11 @@ import java.sql.Timestamp;
 @Table(name = "ATTENDANCES")
 public class Attendance {
 
-   private Timestamp entryTime;
-   private Timestamp exitTime;
+   private LocalDateTime entryTime;
+   private LocalDateTime exitTime;
 
    @Embedded
    @AttributeOverride(name = "id", column = @Column(name = "SHIFT_ID"))
    private Shift currentDailyShift;
-
 
 }

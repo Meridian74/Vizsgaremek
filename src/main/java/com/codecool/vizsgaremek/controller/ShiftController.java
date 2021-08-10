@@ -1,13 +1,10 @@
 package com.codecool.vizsgaremek.controller;
 
 import com.codecool.vizsgaremek.dto.*;
-import com.codecool.vizsgaremek.exception.EmployeeNotFoundException;
-import com.codecool.vizsgaremek.model.Employee;
 import com.codecool.vizsgaremek.service.ShiftService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 

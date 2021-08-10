@@ -13,7 +13,9 @@ public class ShiftDTO {
 
    private long id;
    private String name;
+
    private LocalTime expectedStartTime;
+
    private int durationInHours;
    private int restTimeInMinutes;
 

@@ -1,0 +1,26 @@
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": "Teszt Jakab",
+  "birthDate": "1995-02-18"
+}
+
+###
+POST http://localhost:8080/api/shift
+Content-Type: application/json
+
+{
+  "name": "ALAPÉRTELMEZETT műszak",
+  "startTime": "08:30:00",
+  "duration": 8,
+  "restTime": 30
+}
+###
+POST http://localhost:8080/api/attendances/addshift?shiftid=1&employeeid=1
+Content-Type: application/json
+
+{"date": "2021-08-10"}
+###
+
+

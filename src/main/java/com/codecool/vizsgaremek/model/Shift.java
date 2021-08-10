@@ -1,5 +1,6 @@
 package com.codecool.vizsgaremek.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Shift {
    private String shiftName;
 
    @Column(name = "EXPECTED_START_TIME")
+   @JsonFormat(pattern="HH:mm:ss")
    private LocalTime expectedStartTime;
 
    @Column(name = "DURATION_IN_HOURS")

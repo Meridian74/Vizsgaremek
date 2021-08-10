@@ -22,11 +22,10 @@ public class EmployeeService {
    private ModelMapper modelMapper;
    private EmployeeRepository employeeRepository;
 
-   public EmployeeService(ModelMapper mm, EmployeeRepository er) {
-      this.modelMapper = mm;
-      this.employeeRepository = er;
+   public EmployeeService(ModelMapper modelMapper, EmployeeRepository employeeRepository) {
+      this.modelMapper = modelMapper;
+      this.employeeRepository = employeeRepository;
    }
-
 
    public EmployeeDTO createEmployee(CreateEmployeeCommand command) {
       Employee employee = new Employee();
@@ -58,7 +57,7 @@ public class EmployeeService {
       }
 
       Employee employee = optionalEmployee.get();
-      if (command.getName() != null) {
+      if (command.getName() != null && !command.getName().equals("") ) {
          employee.setName(command.getName());
       }
       if (command.getBirthDate() != null) {
@@ -89,5 +88,6 @@ public class EmployeeService {
 
       return modelMapper.map(filtered, targetListType);
    }
+
 
 }
