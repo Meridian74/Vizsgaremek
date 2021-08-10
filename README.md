@@ -28,3 +28,9 @@ amit most még NEM tud a program:
   ez a fizetés végső kiszámításánál lehet szempont. Igez, ez csak egy munakidő nyilvántartás. 
   Front-enden ezekkel az adatokkal már lehet további -komplex- számításokat végezni ... 
 
+
+Megjegyzés:
+A program teszteléséhez mellékeltem egy "endpoint-test.http" file-t mivel a swagger 
+nem mindenhol mutatja jól a dátum JSON objektumokat.
+Csak végig kel nyomkodni egyesével a beállított HTTP requesteket, és lehet látni hogy jól 
+vagy rosszul műxik a program.
