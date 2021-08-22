@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  vizsgaremek-postgres:
+    image: postgres
+    restart: always
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_PASSWORD: user1
+
+  vizsgaremek-app:
+    image: vizsgaremek
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - vizsgaremek-postgres
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://vizsgaremek-postgres/postgres'
+    entrypoint: ['java', '-jar', 'vizsgaremek.jar']
