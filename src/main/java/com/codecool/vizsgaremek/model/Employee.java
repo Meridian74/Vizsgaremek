@@ -3,6 +3,8 @@ package com.codecool.vizsgaremek.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.FetchMode;
+import org.hibernate.engine.profile.Fetch;
 
 import javax.persistence.*;
 import java.time.LocalDate;

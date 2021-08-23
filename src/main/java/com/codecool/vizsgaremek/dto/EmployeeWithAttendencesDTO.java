@@ -17,6 +17,6 @@ public class EmployeeWithAttendencesDTO {
    private long id;
    private String name;
 
-   Map<LocalDate, Attendance> dailyAttendances = new HashMap<>();
+   private Map<LocalDate, Attendance> dailyAttendances = new HashMap<>();
 
 }
