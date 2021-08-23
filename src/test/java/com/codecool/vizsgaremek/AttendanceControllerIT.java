@@ -59,7 +59,6 @@ public class AttendanceControllerIT {
       long shiftId = shifts.get(0).getId();
 
       LocalDate dateOfWorkDay = LocalDate.parse("2021-08-24");
-
       CreateDateCommand command = new CreateDateCommand(dateOfWorkDay);
 
       String url = attendanceUrl + "/add-shift?emp_id=" + employeeId + "&shift_id=" + shiftId;
@@ -72,5 +71,37 @@ public class AttendanceControllerIT {
 
    }
 
+   @Test
+   public void replaceShift() {
+      jdbcTemplate.update("INSERT INTO EMPLOYEES (birth_date, name) VALUES ('2002-02-16','John Doe')");
+      jdbcTemplate.update("INSERT INTO SHIFTS (shift_name, expected_start_time, duration_in_hours, rest_time_in_minutes) " +
+            "VALUES ('DEFAULT SHIFT', '08:30:00', 8, 30)");
+
+      jdbcTemplate.update("INSERT INTO SHIFTS (shift_name, expected_start_time, duration_in_hours, rest_time_in_minutes) " +
+            "VALUES ('REPLACED SHIFT', '08:30:00', 8, 30)");
+
+      List<EmployeeDTO> employees = List.of(testRestTemplate.getForObject(employeesUrl +
+            "?prefix=John", EmployeeDTO[].class));
+      long employeeId = employees.get(0).getId();
+
+      List<ShiftDTO> shifts = List.of(testRestTemplate.getForObject(shiftUrl + "?prefix=DEFAULT", ShiftDTO[].class));
+      long shiftId = shifts.get(0).getId();
+
+      LocalDate dateOfWorkDay = LocalDate.parse("2021-08-24");
+      CreateDateCommand command = new CreateDateCommand(dateOfWorkDay);
+
+      String url = attendanceUrl + "/add-shift?emp_id=" + employeeId + "&shift_id=" + shiftId;
+      testRestTemplate.postForObject(url, command, AttendanceOfEmployeeDTO.class);
+
+      shifts = List.of(testRestTemplate.getForObject(shiftUrl + "?prefix=REPLACED", ShiftDTO[].class));
+      long newShiftId = shifts.get(0).getId();
+
+      url = attendanceUrl + "/replace-shift?emp_id=" + employeeId + "&new_shift_id=" + newShiftId;
+      AttendanceOfEmployeeDTO attendance = testRestTemplate.postForObject(url, command, AttendanceOfEmployeeDTO.class);
+
+      String expectedNewShiftName = attendance.getAttendeanceOfOneDate().getCurrentDailyShift().getShiftName();
+      assertEquals("REPLACED SHIFT", expectedNewShiftName);
+
+   }
 
 }
