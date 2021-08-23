@@ -1,12 +1,10 @@
 package com.codecool.vizsgaremek;
 
-import java.sql.ResultSet;
+
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import com.codecool.vizsgaremek.dto.*;
-import com.codecool.vizsgaremek.model.Attendance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -69,7 +65,7 @@ public class AttendanceControllerIT {
       String url = attendanceUrl + "/add-shift?emp_id=" + employeeId + "&shift_id=" + shiftId;
       AttendanceOfEmployeeDTO attendance = testRestTemplate.postForObject(url, command, AttendanceOfEmployeeDTO.class);
 
-      url = attendanceUrl + "?emp_id=" + employeeId;
+      url = attendanceUrl + "/list-of-attendances?emp_id=" + employeeId;
       EmployeeWithAttendencesDTO result = testRestTemplate.getForObject(url, EmployeeWithAttendencesDTO.class);
 
       assertEquals(1, result.getDailyAttendances().size());
