@@ -99,3 +99,7 @@ Content-Type: application/json
   "timestamp": "2021-08-10T08:50:23",
   "shiftDate": "2021-08-10"
 }
+
+### get list of attendances of employee by employeeId
+GET http://localhost:8080/api/attendances/list-of-attendances?emp_id=1
+Content-Type: application/json

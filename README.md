@@ -30,7 +30,7 @@ amit most még NEM tud a program:
 
 
 Megjegyzés:
-A program teszteléséhez mellékeltem egy "endpoint-test.http" file-t mivel a swagger 
+A program teszteléséhez mellékeltem egy "endpoint-test.http" file-t is mivel a swagger 
 nem mindenhol mutatja jól a dátum JSON objektumokat.
-Csak végig kel nyomkodni egyesével a beállított HTTP requesteket, és lehet látni hogy jól 
+Csak végig kell nyomkodni egyesével a beállított HTTP requesteket, és lehet látni hogy jól 
 vagy rosszul műxik a program.
