@@ -55,7 +55,8 @@ public class AttendanceControllerIT {
       jdbcTemplate.update("INSERT INTO SHIFTS (shift_name, expected_start_time, duration_in_hours, rest_time_in_minutes) " +
             "VALUES ('DEFAULT SHIFT', '08:30:00', 8, 30)");
 
-      List<EmployeeDTO> employees = List.of(testRestTemplate.getForObject(employeesUrl + "?prefix=John", EmployeeDTO[].class));
+      List<EmployeeDTO> employees = List.of(testRestTemplate.getForObject(employeesUrl +
+            "?prefix=John", EmployeeDTO[].class));
       long employeeId = employees.get(0).getId();
 
       List<ShiftDTO> shifts = List.of(testRestTemplate.getForObject(shiftUrl + "?prefix=DEFAULT", ShiftDTO[].class));
@@ -65,13 +66,11 @@ public class AttendanceControllerIT {
 
       CreateDateCommand command = new CreateDateCommand(dateOfWorkDay);
 
-      AttendanceOfEmployeeDTO attendance = testRestTemplate.postForObject(attendanceUrl +
-            "?emp_id=" + employeeId +
-            "&shift_id=" + shiftId, command, AttendanceOfEmployeeDTO.class);
+      String url = attendanceUrl + "/add-shift?emp_id=" + employeeId + "&shift_id=" + shiftId;
+      AttendanceOfEmployeeDTO attendance = testRestTemplate.postForObject(url, command, AttendanceOfEmployeeDTO.class);
 
-      EmployeeWithAttendencesDTO result = testRestTemplate.getForObject(attendanceUrl +
-            "?emp_id=" + employeeId, EmployeeWithAttendencesDTO.class);
-
+      url = attendanceUrl + "?emp_id=" + employeeId;
+      EmployeeWithAttendencesDTO result = testRestTemplate.getForObject(url, EmployeeWithAttendencesDTO.class);
 
       assertEquals(1, result.getDailyAttendances().size());
 
