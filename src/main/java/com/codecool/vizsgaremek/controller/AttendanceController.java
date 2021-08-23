@@ -38,8 +38,8 @@ public class AttendanceController {
    @GetMapping("/shift-at-date")
    public AttendanceOfEmployeeDTO getEmployeeAttendanceByDate(
          @RequestParam("emp_id") long employeeId,
-         @RequestBody CreateDateCommand command) {
-      return attendanceService.getEmployeeAttendanceByDate(employeeId, command);
+         @RequestParam("date") String date) {
+      return attendanceService.getEmployeeAttendanceByDate(employeeId, date);
    }
 
    @GetMapping("/list-of-attendances")

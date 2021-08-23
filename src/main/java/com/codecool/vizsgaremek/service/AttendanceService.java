@@ -67,9 +67,9 @@ public class AttendanceService {
       return createAttendanceOfEmployeeDto(employee, shiftDate, attendance);
    }
 
-   public AttendanceOfEmployeeDTO getEmployeeAttendanceByDate(long employeeId, CreateDateCommand command) {
+   public AttendanceOfEmployeeDTO getEmployeeAttendanceByDate(long employeeId, String date) {
       Employee employee = selectEmployee(employeeId);
-      LocalDate shiftDate = command.getDate();
+      LocalDate shiftDate = LocalDate.parse(date);
 
       Map dailyAttendancesOfEmployee = employee.getDailyAttendances();
       if (dailyAttendancesOfEmployee.get(shiftDate) == null ||

@@ -62,10 +62,9 @@ Content-Type: application/json
 
 
 ### get employee attendance by a given date
-GET localhost:8080/api/attendances/shift-at-date?emp_id=1
+GET localhost:8080/api/attendances/shift-at-date?emp_id=1&date=2021-08-10
 Content-Type: application/json
 
-{"date": "2021-08-10"}
 
 ### get list of attendances of employee by employeeId
 GET http://localhost:8080/api/attendances/list-of-attendances?emp_id=1
