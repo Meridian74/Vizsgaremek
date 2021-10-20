@@ -10,10 +10,11 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Name and birth date for the new employee", example = "Teszt Jakab, 1998-03-01")
 public class CreateEmployeeCommand {
 
+   @Schema(description = "Name of the new employee", example = "Teszt Jakab")
    private String name;
+   @Schema(description = "Birth date of the new employee", example = "1998-03-19")
    private LocalDate birthDate;
 
 }

@@ -1,6 +1,20 @@
 # vizsgaremek
 Java Backend Vizsgaremek feladat
 
+Dockeres indításhoz a projekt könyvtárban állva add ki a következő parancsot (terminálban):
+
+"docker build -t vizsgaremek ."
+
+ezután lépj be a 'vizsgaremek' nevű könyvtárba és ott add ki a következő parancsot:
+
+"docker compose up"
+
+Ha minden jól megy, akkor lesz egy postgres nevű container és egy vizsgaremek nevű java app konténer 
+amelyek elindulnak.
+A 'vizsgaremek' JAVA app-os konténerben maga az alkalmazás (a munkaidőnyilvántartás feladat) fut, 
+a 'postgres' nevűben pedig az adatok tárolódnak, egy postgre SQL szerveren.
+A megfelelő portok kivezetve.
+
 ---
 Készültségi állapot.
 A dátum JSON vs SWAGGER vs JAVA problémákkal nehezen boldogultam, elment vele egy csomó időm sajnos.
