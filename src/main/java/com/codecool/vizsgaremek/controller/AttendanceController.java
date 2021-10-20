@@ -2,12 +2,14 @@ package com.codecool.vizsgaremek.controller;
 
 import com.codecool.vizsgaremek.dto.*;
 import com.codecool.vizsgaremek.service.AttendanceService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api/attendances")
+@Tag(name = " Operations of Attendances")
 public class AttendanceController {
 
    private AttendanceService attendanceService;

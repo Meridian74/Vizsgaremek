@@ -1,5 +1,6 @@
 package com.codecool.vizsgaremek.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/api/dateformat")
+@Tag(name = "Representing of the time formats")
 public class ShowDateFormatController {
 
    @PostMapping("/date")

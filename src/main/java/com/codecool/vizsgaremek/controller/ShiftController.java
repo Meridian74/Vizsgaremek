@@ -2,6 +2,7 @@ package com.codecool.vizsgaremek.controller;
 
 import com.codecool.vizsgaremek.dto.*;
 import com.codecool.vizsgaremek.service.ShiftService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/shift")
+@Tag(name = "Operations of Shift")
 public class ShiftController {
 
    private ShiftService shiftService;

@@ -4,6 +4,7 @@ import com.codecool.vizsgaremek.dto.CreateEmployeeCommand;
 import com.codecool.vizsgaremek.dto.EmployeeDTO;
 import com.codecool.vizsgaremek.dto.UpdateEmployeeCommand;
 import com.codecool.vizsgaremek.service.EmployeeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employees")
+@Tag(name = " Operations of Employees")
 public class EmployeeController {
 
    private EmployeeService employeeService;
